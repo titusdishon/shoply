@@ -1,11 +1,11 @@
 import React, { useState, Fragment, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductDetails } from "../../actions/products";
 import { useAlert } from "react-alert";
-import Loader from "../layouts/Loader";
 import MetaData from "../layouts/MetaData";
-import {Carousel } from "react-bootstrap";
+import Loader from "../layouts/Loader";
+import { getProductDetails } from "../../actions/products";
+import { Carousel } from "react-bootstrap";
 
 function ProductDetails({ match }) {
   const [openModal, setOpenModal] = useState(false);
@@ -28,28 +28,40 @@ function ProductDetails({ match }) {
         <Loader />
       ) : (
         <Fragment>
-          <MetaData title="product details" />
+          <MetaData title={product && product.name} />
           <div className="row f-flex justify-content-around">
             <div className="col-12 col-lg-5 img-fluid" id="product_image">
-             <Carousel params="hover">
-                 {product.images&&product.images.map(image =>(
-                     <Carousel.Item key={image.public_id}>
-                         <img className="d-block w-100" src={image.url} alert={product.title}/>
-                     </Carousel.Item>
-                 ))}
-             </Carousel>
+              <Carousel params="hover">
+                {product.images &&
+                  product.images.map((image) => (
+                    <Carousel.Item key={image.public_id}>
+                      <img
+                        className="d-block w-100"
+                        src={image.url}
+                        alert={product.title}
+                      />
+                    </Carousel.Item>
+                  ))}
+              </Carousel>
             </div>
             <div className="col-12 col-lg-5 mt-5">
-              <h3 className="mt-2 text-success font-weight-bold">{product && product.name}</h3>
-              <p id="product_id" className="mt-2 font-italic">Product #{product._id}</p>
+              <h3 className="mt-2 text-success font-weight-bold">
+                {product && product.name}
+              </h3>
+              <p id="product_id" className="mt-2 font-italic">
+                Product #{product._id}
+              </p>
               <hr />
               <div className="rating-outer">
-                <div className="rating-inner"  style={{ width: `${(product.reatings / 5) * 100}%` }}></div>
+                <div
+                  className="rating-inner"
+                  style={{ width: `${(product.ratings / 5) * 100}%` }}
+                ></div>
               </div>
               <span id="no_of_reviews">({product.numOfReviews} Reviews)</span>
               <hr />
 
-              <p id="product_price">{product&&product.price}</p>
+              <p id="product_price">{product && product.price}</p>
               <div className="stockCounter d-inline">
                 <span className="btn btn-danger minus">-</span>
 
@@ -65,7 +77,7 @@ function ProductDetails({ match }) {
               <button
                 type="button"
                 id="cart_btn"
-                disabled={!product.stock>0}
+                disabled={!product.stock > 0}
                 className="btn btn-primary d-inline ml-4"
               >
                 Add to Cart
@@ -74,12 +86,20 @@ function ProductDetails({ match }) {
               <hr />
 
               <p>
-                Status: <span className={product.stock>0?'text-success':'text-danger'} id="stock_status">{product.stock>0?'In Stock':'Out Of Stock'}</span>
+                Status:{" "}
+                <span
+                  className={product.stock > 0 ? "text-success" : "text-danger"}
+                  id="stock_status"
+                >
+                  {product.stock > 0 ? "In Stock" : "Out Of Stock"}
+                </span>
               </p>
 
               <hr />
 
-              <h4 className="mt-2 text-success font-weight-bold">Description:</h4>
+              <h4 className="mt-2 text-success font-weight-bold">
+                Description:
+              </h4>
               <p>{product && product.description}</p>
               <hr />
               <p id="product_seller mb-3">
