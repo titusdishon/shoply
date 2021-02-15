@@ -28,7 +28,7 @@ function ProductDetails({ match }) {
         <Loader />
       ) : (
         <Fragment>
-          <MetaData title="product details" />
+          <MetaData title={product&&product.name} />
           <div className="row f-flex justify-content-around">
             <div className="col-12 col-lg-5 img-fluid" id="product_image">
              <Carousel params="hover">
@@ -44,7 +44,7 @@ function ProductDetails({ match }) {
               <p id="product_id" className="mt-2 font-italic">Product #{product._id}</p>
               <hr />
               <div className="rating-outer">
-                <div className="rating-inner"  style={{ width: `${(product.reatings / 5) * 100}%` }}></div>
+                <div className="rating-inner"  style={{ width: `${(product.ratings / 5) * 100}%` }}></div>
               </div>
               <span id="no_of_reviews">({product.numOfReviews} Reviews)</span>
               <hr />
