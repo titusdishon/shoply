@@ -38,7 +38,7 @@ function ProductDetails({ match }) {
                       <img
                         className="d-block w-100"
                         src={image.url}
-                        alert={product.title}
+                        alt={product.title}
                       />
                     </Carousel.Item>
                   ))}

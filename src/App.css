@@ -27,7 +27,9 @@ body {
   background-clip: padding-box;
   border-radius: 5px;
 }
-
+.required{
+  border: 1px solid red !important;
+}
 nav {
   background-color: #232f3e;
   padding: 1rem 1rem;
