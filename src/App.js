@@ -16,6 +16,7 @@ import ChangePassword from "./components/user/ChangePassword";
 import ForgotPassword from "./components/user/ForgotPassword";
 import {useSelector} from "react-redux";
 import NewPassword from "./components/user/NewPassword";
+import Cart from "./components/cart/cart";
 
 function App() {
     const {isAuthenticated} = useSelector((state) => state.auth);
@@ -41,6 +42,7 @@ function App() {
                     <ProtectedRoute path="/profile" component={Profile}/>
                     <ProtectedRoute path="/me/update" component={UpdateUserProfile}/>
                     <ProtectedRoute path="/new/password" component={ChangePassword}/>
+                    <ProtectedRoute path="/cart" component={Cart}/>
                     <Route path="/product/:id" component={ProductDetails} exact/>
                 </div>
                 <Footer/>

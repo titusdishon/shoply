@@ -5,10 +5,12 @@ import {Link, Route} from "react-router-dom";
 import Search from "./Search";
 import {logoutUser} from "../../actions/user";
 import {useAlert} from "react-alert";
+
 function Header() {
     const dispatch = useDispatch();
     const alert = useAlert();
-    const {user, isAuthenticated,loading} = useSelector((state) => state.auth);
+    const {user, isAuthenticated, loading} = useSelector((state) => state.auth);
+    const {cartItems} = useSelector((state) => state.cart);
     const logoutHandler = () => {
         dispatch(logoutUser());
         alert.success("Logged out successfully");
@@ -18,17 +20,17 @@ function Header() {
             <nav className="navbar row">
                 <div className="col-12 col-md-3">
                     <div className="navbar-brand">
-                      <Link to={"/"}>
-                          <img src={logo} alt={"avatar"}/>
-                      </Link>
+                        <Link to={"/"}>
+                            <img src={logo} alt={"avatar"}/>
+                        </Link>
                     </div>
                 </div>
                 <div className="col-12 col-md-6 mt-2 mt-md-0">
                     <Route render={({history}) => <Search history={history}/>}/>
                 </div>
                 <div className="col-12 col-md-3 mt-4 mt-md-0 text-center">
-                    <span id="cart" className="ml-3">Cart</span>
-                    <span className="mr-3" id="cart_count">2</span>
+                    <Link to={"/cart"}><span id="cart" className="ml-3">Cart</span>
+                        <span className="mr-3" id="cart_count">{cartItems.length}</span></Link>
                     {isAuthenticated ? (
                         <div className="ml-4 dropdown d-inline">
                             <Link to={"#"} className={"btn dropdown-toggle text-white"}
@@ -38,7 +40,7 @@ function Header() {
                                     <img src={user && user.avatar && user.avatar.url} alt={user && user.name}
                                          className={"rounded-circle"}/>
                                 </figure>
-                                <span>{user&&user.name}</span>
+                                <span>{user && user.name}</span>
                             </Link>
                             <div className="dropdown-menu" aria-labelledby={"dropDownMenuButton"}>
                                 {user && user.role !== 'admin' ? (
