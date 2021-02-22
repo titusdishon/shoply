@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Header from "./components/layouts/Header";
 import Footer from "./components/layouts/Footer";
 import Home from "./components/Home";
@@ -14,18 +14,28 @@ import ProtectedRoute from "./components/route/ProtectedRoute";
 import UpdateUserProfile from "./components/user/updateProfile";
 import ChangePassword from "./components/user/ChangePassword";
 import ForgotPassword from "./components/user/ForgotPassword";
-import {useSelector} from "react-redux";
 import NewPassword from "./components/user/NewPassword";
+import Cart from "./components/cart/cart";
+import Shipping from "./components/cart/shipping";
+import ConfirmOrder from "./components/cart/confirmOrder";
+import {Elements} from "@stripe/react-stripe-js";
+import {loadStripe} from "@stripe/stripe-js/pure";
+import Payment from "./components/cart/payment";
+import axios from 'axios';
 
 function App() {
-    const {isAuthenticated} = useSelector((state) => state.auth);
+    const [stripe_api, setStripe] = useState();
+
     useEffect(() => {
-       return {
-           if (isAuthenticated){
-               store.dispatch(loadUser()).then(r => {});
-           }
-       }
-    }, [isAuthenticated]);
+        async function getStripeApiKey() {
+            const {data} = await axios.get('/api/v1/stripe-api');
+            setStripe(data.stripeApiKey);
+        }
+
+        getStripeApiKey().then();
+        store.dispatch(loadUser()).then(r => {
+        });
+    }, []);
 
     return (
         <Router>
@@ -41,6 +51,14 @@ function App() {
                     <ProtectedRoute path="/profile" component={Profile}/>
                     <ProtectedRoute path="/me/update" component={UpdateUserProfile}/>
                     <ProtectedRoute path="/new/password" component={ChangePassword}/>
+                    <ProtectedRoute path="/shipping" component={Shipping}/>
+                    <ProtectedRoute path="/order/confirm" component={ConfirmOrder}/>
+                    {
+                        stripe_api && <Elements stripe={loadStripe(stripe_api)}>
+                            <ProtectedRoute path="/payment" component={Payment}/>
+                        </Elements>
+                    }
+                    <Route path="/cart" component={Cart}/>
                     <Route path="/product/:id" component={ProductDetails} exact/>
                 </div>
                 <Footer/>
