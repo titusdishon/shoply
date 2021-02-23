@@ -7,14 +7,12 @@ function Cart({history}) {
     const dispatch = useDispatch();
     const {cartItems} = useSelector(state => state.cart)
     const increaseQty = (id, quantity, stock) => {
-        console.log("PRODUCT ID", id)
         const newQty = quantity + 1;
         if (newQty >= stock) return;
         dispatch(addItemToCart(id, newQty));
     }
 
     const decreaseQty = (id, quantity) => {
-        console.log("PRODUCT ID", id)
         const newQty = quantity - 1;
         if (newQty <= 0) return;
         dispatch(addItemToCart(id, newQty));
@@ -27,7 +25,6 @@ function Cart({history}) {
         e.preventDefault();
         history.push(`/login?redirect=shipping`)
     }
-
 
     return (
         <Fragment>
