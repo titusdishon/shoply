@@ -8,7 +8,7 @@ body {
   overflow-x: hidden;
 }
 .bg-dark {
-  background-color: #000000!important;
+  background-color: #232f3e!important;
 }
 /* Scroll Bar */
 
@@ -119,7 +119,6 @@ nav {
 
 /* Footer */
 footer {
-  margin-top: 8rem;
   color: grey;
   bottom: 0;
   width: 100%;

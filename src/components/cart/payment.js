@@ -5,6 +5,7 @@ import {useAlert} from "react-alert";
 import {CardCvcElement, CardExpiryElement, CardNumberElement, useElements, useStripe} from "@stripe/react-stripe-js";
 import CheckoutSteps from "./checkoutSteps";
 import axios from "axios";
+import {clearErrors, createOrder} from "../../actions/order";
 
 const options = {
     style: {
@@ -20,20 +21,34 @@ const options = {
 function Payment({history}) {
     const {shippingInfo, cartItems} = useSelector(state => state.cart);
     const {user} = useSelector(state => state.auth);
+    const {error} = useSelector(state => state.newOrder);
     const dispatch = useDispatch();
     const alert = useAlert();
     const stripe = useStripe();
     const elements = useElements();
 
     useEffect(() => {
+        if (error) {
+            alert.error(error);
+            dispatch(clearErrors())
+        }
+    }, [dispatch, error, alert])
 
-    }, [])
+    const order = {
+        orderItems: cartItems,
+        shippingInfo,
 
+    }
     const orderInfo = JSON.parse(sessionStorage.getItem('orderInfo'));
+    if (orderInfo) {
+             order.itemsPrice = orderInfo.itemsPrice;
+            order.taxPrice = orderInfo.taxPrice;
+            order.shippingPrice = orderInfo.shippingPrice;
+            order.totalPrice = orderInfo.totalPrice;
+    }
     const paymentData = {
         amount: Math.round(orderInfo.totalPrice * 100)
     }
-
     const submitHandler = async (e) => {
         e.preventDefault();
         document.querySelector('#pay_btn').disabled = true;
@@ -64,7 +79,11 @@ function Payment({history}) {
                 document.querySelector('#pay_btn').disabled = false;
             } else {
                 if (result.paymentIntent.status === 'succeeded') {
-                    //TODO: New Order
+                    order.paymentInfo = {
+                        id: result.paymentIntent.id,
+                        status: result.paymentIntent.status
+                    }
+                    dispatch(createOrder(order));
                     history.push('/success');
                 } else {
                     alert.error('There was an issue processing your payment')

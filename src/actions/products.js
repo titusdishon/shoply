@@ -7,7 +7,14 @@ import {
   PRODUCT_DETAILS_REQUEST,
   PRODUCT_DETAILS_FAIL,
   PRODUCT_DETAILS_SUCCESS,
+  NEW_REVIEW_REQUEST,
+  NEW_REVIEW_FAIL,
+  NEW_REVIEW_SUCCESS,
+  ADMIN_ALL_PRODUCTS_REQUEST,
+  ADMIN_ALL_PRODUCTS_SUCCESS, ADMIN_ALL_PRODUCTS_FAIL,
 } from "../constants/productConstants";
+import {config} from "../constants/general";
+import {NEW_PASSWORD_SUCCESS} from "../constants/authConstants";
 
 export const getAllProducts = (
   keyword = "",
@@ -37,7 +44,7 @@ export const getAllProducts = (
   }
 };
 
-
+//Get product details
 export const getProductDetails = (id) => async (dispatch) => {
   try {
     dispatch({
@@ -52,6 +59,45 @@ export const getProductDetails = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: PRODUCT_DETAILS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//get admin products
+export const getAdminProducts = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: ADMIN_ALL_PRODUCTS_REQUEST,
+    });
+
+    const data = await axios.get(`/api/v1/admin/products`);
+    dispatch({
+      type: ADMIN_ALL_PRODUCTS_SUCCESS,
+      payload: data.data.products,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_ALL_PRODUCTS_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+//submit a product review
+export const newReview = (reviewData) => async (dispatch) => {
+  try {
+    dispatch({
+      type: NEW_REVIEW_REQUEST,
+    });
+    const data = await axios.put(`/api/v1/review`, reviewData, config);
+    dispatch({
+      type: NEW_REVIEW_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: NEW_REVIEW_FAIL,
       payload: error.response.data.message,
     });
   }

@@ -43,15 +43,13 @@ function Header() {
                                 <span>{user && user.name}</span>
                             </Link>
                             <div className="dropdown-menu" aria-labelledby={"dropDownMenuButton"}>
-                                {user && user.role !== 'admin' ? (
-                                    <Link className={"dropdown-item "} to={"/orders"}>Orders</Link>
-                                ) : (
+                                {user && user.role === 'admin' && (
                                     <Link className={"dropdown-item "} to={"/dashboard"}>Dashboard</Link>
                                 )}
+                                <Link className={"dropdown-item "} to={"/orders/me"}>Orders</Link>
                                 <Link className={"dropdown-item "} to={"/profile"}>Profile</Link>
                                 <Link className={"dropdown-item "} to={"new/password"}>Change Password</Link>
-                                <Link className={"dropdown-item text-danger"} to={"/"}
-                                      onClick={logoutHandler}>Logout</Link>
+                                <Link className={"dropdown-item text-danger"} to={"/"} onClick={logoutHandler}>Logout</Link>
                             </div>
                         </div>
                     ) : !loading && <Link className="btn" id="login_btn" to={"/login"}>Login</Link>}

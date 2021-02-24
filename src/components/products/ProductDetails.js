@@ -1,27 +1,39 @@
 import React, {Fragment, useEffect, useState} from "react";
-import {Carousel, Modal} from "react-bootstrap";
+import {Carousel} from "react-bootstrap";
 import {useDispatch, useSelector} from "react-redux";
 import {useAlert} from "react-alert";
 import MetaData from "../layouts/MetaData";
 import Loader from "../layouts/Loader";
-import {getProductDetails} from "../../actions/products";
+import {getProductDetails, newReview} from "../../actions/products";
 import {addItemToCart} from "../../actions/cart";
+import {Link} from "react-router-dom";
+import {NEW_REVIEW_RESET} from "../../constants/productConstants";
+import ListReviews from "../review/listReview";
 
 function ProductDetails({match}) {
-    const [openModal, setOpenModal] = useState(false);
+    const [rating, setRating] = useState(0);
+    const [comment, setComment] = useState('');
     const [quantity, setQuantity] = useState(1);
     const dispatch = useDispatch();
+    const {user} = useSelector(state => state.auth);
+    const {error: reviewError, success} = useSelector(state => state.newReview);
     const alert = useAlert();
     const {loading, product, error} = useSelector(
         (state) => state.productDetails
     );
     useEffect(() => {
         if (error) {
-            return alert.error(error);
+            return alert.error(reviewError);
         }
-
+        if (success) {
+            alert.success("Review posted successfully");
+            dispatch({
+                type: NEW_REVIEW_RESET
+            })
+        }
         dispatch(getProductDetails(match.params.id));
-    }, [dispatch, alert, error, match.params.id]);
+    }, [dispatch, alert, reviewError, match.params.id, success]);
+
     const increaseQty = (e) => {
         e.preventDefault();
         const count = document.querySelector('.count')
@@ -40,6 +52,47 @@ function ProductDetails({match}) {
     const addToCart = () => {
         dispatch(addItemToCart(match.params.id, quantity));
         alert.success("Item successfully added to cart")
+    }
+
+    function setUserRatings(e) {
+        const stars = document.querySelectorAll(".star");
+        stars.forEach((star, index) => {
+            star.starValue = index + 1;
+            ['click', 'mouseover', 'mouseout'].forEach(function (e) {
+                star.addEventListener(e, showStarRatings)
+            })
+        })
+
+        function showStarRatings(e) {
+            stars.forEach((star, index) => {
+                if (e.type === 'click') {
+                    if (index < this.starValue) {
+                        star.classList.add('orange');
+                        setRating(this.starValue);
+                    } else {
+                        star.classList.remove('orange');
+                    }
+                }
+                if (e.type === 'mouseover') {
+                    if (index < this.starValue) {
+                        star.classList.add('yellow');
+                    } else {
+                        star.classList.remove('yellow');
+                    }
+                }
+                if (e.type === 'mouseout') {
+                    star.classList.remove('yellow');
+                }
+            })
+        }
+    }
+
+    const submitHandler = () => {
+        const formData = new FormData();
+        formData.set('rating', rating)
+        formData.set('comment', comment)
+        formData.set('productId', match.params.id);
+        dispatch(newReview(formData));
     }
     return (
         <Fragment>
@@ -77,7 +130,7 @@ function ProductDetails({match}) {
                                     style={{width: `${(product.ratings / 5) * 100}%`}}
                                 />
                             </div>
-                            <span id="no_of_reviews">({product.numOfReviews} Reviews)</span>
+                            <span id="no_of_reviews">({product.reviews.length} Reviews)</span>
                             <hr/>
                             <p id="product_price">{product && product.price}</p>
                             <div className="stockCounter d-inline">
@@ -89,7 +142,6 @@ function ProductDetails({match}) {
                                     value={quantity}
                                     readOnly
                                 />
-
                                 <span className="btn btn-primary plus" onClick={increaseQty}>+</span>
                             </div>
                             <button
@@ -110,8 +162,8 @@ function ProductDetails({match}) {
                                     className={product.stock > 0 ? "text-success" : "text-danger"}
                                     id="stock_status"
                                 >
-                  {product.stock > 0 ? "In Stock" : "Out Of Stock"}
-                </span>
+                              {product.stock > 0 ? "In Stock" : "Out Of Stock"}
+                            </span>
                             </p>
 
                             <hr/>
@@ -125,46 +177,37 @@ function ProductDetails({match}) {
                                 Sold by: <strong>{product && product.seller}</strong>
                             </p>
 
-                            <button
-                                id="review_btn"
-                                type="button"
-                                onClick={() => setOpenModal(true)}
-                                className="btn btn-primary mt-4"
-                                data-toggle="modal"
-                                data-target="#ratingModal"
-                            >
-                                Submit Your Review
-                            </button>
+                            {user ?
+                                <button id="review_btn" type="button" className="btn btn-primary mt-4"
+                                        data-toggle="modal" data-target="#ratingModal"
+                                        onClick={setUserRatings}>
+                                    Submit Your Review
+                                </button> : (
+                                    <Link to={"/login"}>
+                                        <div className="alert alert-danger mt-5"> Login to submit a review</div>
+                                    </Link>
+                                )}
 
-                            <div className="row mt-2 mb-5">
-                                <div className="rating w-50">
-                                    <Modal
-                                        className="modal fade"
-                                        show={openModal}
-                                        onHide={() => setOpenModal(false)}
-                                    >
-                                        <div className="modal-content">
-                                            <div className="modal-header">
-                                                <h5 className="modal-title" id="ratingModalLabel">
-                                                    Submit Review
-                                                </h5>
-                                                <button
-                                                    type="button"
-                                                    className="close"
-                                                    onClick={() => setOpenModal(false)}
-                                                    data-dismiss="modal"
-                                                    aria-label="Close"
-                                                >
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
+                            <div className="modal fade" id="ratingModal" tabIndex="-1" role="dialog"
+                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div className="modal-dialog" role="document">
+                                    <div className="modal-content">
+                                        <div className="modal-header">
+                                            <h5 className="modal-title" id="ratingModalLabel">
+                                                Submit Review
+                                            </h5>
+                                        </div>
+                                        <div className="modal-body">
                                             <div className="modal-body">
                                                 <ul className="stars">
                                                     <li className="star">
-                                                        <i className="fa fa-star"></i>
+                                                        <i className="fa fa-star"/>
                                                     </li>
                                                     <li className="star">
-                                                        <i className="fa fa-star"></i>
+                                                        <i className="fa fa-star"/>
+                                                    </li>
+                                                    <li className="star">
+                                                        <i className="fa fa-star"/>
                                                     </li>
                                                     <li className="star">
                                                         <i className="fa fa-star"/>
@@ -177,26 +220,36 @@ function ProductDetails({match}) {
                                                 <textarea
                                                     name="review"
                                                     id="review"
+                                                    onChange={(e) => setComment(e.target.value)}
                                                     className="form-control mt-3"
                                                 />
-                                                <button
-                                                    className="btn my-3 float-right review-btn px-4 text-white"
-                                                    data-dismiss="modal"
-                                                    aria-label="Close"
-                                                >
-                                                    Submit
-                                                </button>
+
                                             </div>
                                         </div>
-                                    </Modal>
+                                        <div className="modal-footer">
+                                            <button
+                                                className="btn my-3 float-right review-btn px-4 text-white"
+                                                data-dismiss="modal"
+                                                aria-label="Close"
+                                                disabled={comment === ''}
+                                                onClick={submitHandler}
+                                            >
+                                                Submit
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    {product&&product.reviews&&product.reviews.length>0&&(
+                        <ListReviews reviews={product.reviews}/>
+                    )}
                 </Fragment>
             )}
         </Fragment>
     );
 }
 
-export default ProductDetails;
+export default ProductDetails
