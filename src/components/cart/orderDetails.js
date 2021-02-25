@@ -10,14 +10,14 @@ function OrderDetails({match}) {
     const alert = useAlert();
     const dispatch = useDispatch()
     const {loading, error, order} = useSelector(state => state.order);
-    const {shippingInfo, orderItems, paymentInfo, user, totalPrice, orderStatus} = order;
+    const {shippingInfo, orderItems, paymentInfo, user, totalPrice} = order;
     useEffect(() => {
         dispatch(getOrderDetails(match.params.id))
         if (error) {
             alert.error(error);
             dispatch(clearErrors());
         }
-    }, [dispatch, error, alert]);
+    }, [dispatch, error, alert,match.params.id]);
     const shippingAddressDetails = shippingInfo && `${shippingInfo.address},${shippingInfo.city},${shippingInfo.postalCode},${shippingInfo.country}`
     const isPaid = paymentInfo && paymentInfo.status === 'succeeded'
     return (

@@ -32,7 +32,7 @@ function ProductDetails({match}) {
             })
         }
         dispatch(getProductDetails(match.params.id));
-    }, [dispatch, alert, reviewError, match.params.id, success]);
+    }, [dispatch, alert, reviewError, match.params.id, success,error]);
 
     const increaseQty = (e) => {
         e.preventDefault();
@@ -130,9 +130,9 @@ function ProductDetails({match}) {
                                     style={{width: `${(product.ratings / 5) * 100}%`}}
                                 />
                             </div>
-                            <span id="no_of_reviews">({product.reviews.length} Reviews)</span>
+                            <span id="no_of_reviews">({product.reviews&&product.reviews.length} Reviews)</span>
                             <hr/>
-                            <p id="product_price">{product && product.price}</p>
+                            <p id="product_price">{product && product.currency}:{' '}{product && product.price}</p>
                             <div className="stockCounter d-inline">
                                 <span className="btn btn-danger minus" onClick={decreaseQty}>-</span>
 

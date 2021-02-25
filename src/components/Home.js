@@ -8,6 +8,7 @@ import { useAlert } from "react-alert";
 import Pagination from "react-js-pagination";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
+import {categories} from "../constants/common";
 const { createSliderWithTooltip } = Slider;
 const Range = createSliderWithTooltip(Slider.Range);
 
@@ -17,20 +18,6 @@ function Home({ match }) {
   const [category, setCategory] = useState("");
   const [rating, setRating] = useState("0");
 
-  const categories = [
-    "Electronics",
-    "Cameras",
-    "Laptop",
-    "Accessories",
-    "Headphones",
-    "Food",
-    "Books",
-    "Clothes/Shoes",
-    "Beauty/Health",
-    "Sports",
-    "Outdoor",
-    "Home",
-  ];
 
   const [price, setPrice] = useState([1, 10000]);
 
@@ -128,7 +115,7 @@ function Home({ match }) {
                                 <div
                                   className="rating-inner"
                                   style={{ width: `${star * 20}%` }}
-                                ></div>
+                                />
                               </div>
                             </li>
                           ))}

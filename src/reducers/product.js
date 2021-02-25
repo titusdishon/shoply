@@ -1,10 +1,15 @@
 import {
     ADMIN_ALL_PRODUCTS_FAIL,
-    ADMIN_ALL_PRODUCTS_REQUEST, ADMIN_ALL_PRODUCTS_SUCCESS,
+    ADMIN_ALL_PRODUCTS_REQUEST,
+    ADMIN_ALL_PRODUCTS_SUCCESS,
     ALL_PRODUCTS_FAIL,
     ALL_PRODUCTS_REQUEST,
     ALL_PRODUCTS_SUCCESS,
     CLEAR_ERRORS,
+    NEW_PRODUCT_FAIL,
+    NEW_PRODUCT_REQUEST,
+    NEW_PRODUCT_RESET,
+    NEW_PRODUCT_SUCCESS,
     NEW_REVIEW_FAIL,
     NEW_REVIEW_REQUEST,
     NEW_REVIEW_RESET,
@@ -33,7 +38,7 @@ export const productsReducer = (state = {products: []}, action) => {
         case ADMIN_ALL_PRODUCTS_SUCCESS:
             return {
                 loading: false,
-                products:action.payload
+                products: action.payload
             }
         case ALL_PRODUCTS_FAIL:
         case ADMIN_ALL_PRODUCTS_FAIL:
@@ -121,6 +126,46 @@ export const newReviewReducer = (state = {product: {}}, action) => {
                 error: action.payload,
             };
         case NEW_REVIEW_RESET:
+            return {
+                ...state,
+                loading: false,
+                success: false,
+            };
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null,
+            };
+        default:
+            return state;
+    }
+};
+
+
+//new product
+
+export const newProductReducer = (state = {product: {}}, action) => {
+    switch (action.type) {
+        case NEW_PRODUCT_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            };
+
+        case NEW_PRODUCT_SUCCESS:
+            return {
+                ...state,
+                success: action.payload.data.success,
+                product: action.payload.data.product,
+                loading: false,
+            };
+        case NEW_PRODUCT_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+            };
+        case NEW_PRODUCT_RESET:
             return {
                 ...state,
                 loading: false,

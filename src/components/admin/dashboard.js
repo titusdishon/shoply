@@ -1,13 +1,16 @@
 import React, {Fragment, useEffect} from "react";
 import SideBar from "./sideBar";
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import MetaData from "../layouts/MetaData";
 import {useDispatch, useSelector} from "react-redux";
 import {getAdminProducts} from "../../actions/products";
 import {clearErrors} from "../../actions/order";
+import {useAlert} from "react-alert";
 
 function Dashboard() {
     const dispatch = useDispatch()
+    const alert=useAlert();
+    const {user}=useSelector(state=>state.auth);
     const {error, products} = useSelector(state => state.products);
     useEffect(() => {
         dispatch(getAdminProducts())
@@ -17,13 +20,14 @@ function Dashboard() {
         }
     }, [dispatch, error, alert]);
     let outOfStock=0;
-    products.forEach(product=>{
+    products&&products.forEach(product=>{
          if (product.stock===0){
              outOfStock+=1
          }
     })
     return (
         <Fragment>
+            {user.role!=='admin'?<Redirect to="/"/>:null}
             <MetaData title={"Admin Dashboard"}/>
             <div className="row">
                 <div className="col-12 col-md-2">

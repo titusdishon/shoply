@@ -14,7 +14,7 @@ function Product({ product,col }) {
             <div className="rating-outer">
             <div className="rating-inner"  style={{ width: `${(product.ratings / 5) * 100}%` }}/>
             </div>
-            <span id="no_of_reviews">({product.numberOfReviews} Reviews)</span>
+            <span id="no_of_reviews">({product.numOfReviews} Reviews)</span>
           </div>
           <p className="card-text">
             {product.currency}

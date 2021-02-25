@@ -11,14 +11,14 @@ function SideBar(){
                         <Link to={"/dashboard"}><i className="fa fa-tachometer"/> Dashboard</Link>
                     </li>
                     <li>
-                        <a href="#productSubmenu" data-toggle="collapse" aria-expanded="false"
+                         <a href="#productSubmenu" data-toggle="collapse" aria-expanded="false"
                            className="dropdown-toggle"><i className="fa fa-product-hunt" aria-hidden="true"/>Products</a>
                         <ul className="collapse list-unstyled" id="productSubmenu">
                             <li>
                                 <Link to={"/dashboard/products"}><i className="fa fa-list"/> All</Link>
                             </li>
                             <li>
-                                <Link to={"/admin/product"}><i className="fa fa-plus"/> Create</Link>
+                                <Link to={"/admin/product/new"}><i className="fa fa-plus"/> Create</Link>
                             </li>
                         </ul>
                     </li>

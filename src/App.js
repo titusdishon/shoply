@@ -26,10 +26,12 @@ import ListOrders from "./components/cart/listOrders";
 import OrderDetails from "./components/cart/orderDetails";
 import Dashboard from "./components/admin/dashboard";
 import ProductList from "./components/admin/productList";
+import NewProduct from "./components/admin/newProduct";
+import {useSelector} from "react-redux";
 
 function App() {
     const [stripe_api, setStripe] = useState();
-
+    const {user, loading}=useSelector(state=>state.auth);
     useEffect(() => {
         async function getStripeApiKey() {
             const {data} = await axios.get('/api/v1/stripe-api');
@@ -72,8 +74,9 @@ function App() {
                     {/*admin routes*/}
                 </div>
                 <ProtectedRoute path="/dashboard" isAdmin={true} component={Dashboard} exact/>
+                <ProtectedRoute path="/admin/product/new" isAdmin={true} component={NewProduct} exact/>
                 <ProtectedRoute path="/dashboard/products" isAdmin={true} component={ProductList} exact/>
-                <Footer/>
+                {!loading && user.role !== 'admin' && (<Footer/>)}
             </div>
         </Router>
     );
