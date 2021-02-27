@@ -19,7 +19,6 @@ function NewProduct({history}) {
     const [category, setProductCategory] = useState('');
     const [currency, setProductCurrency] = useState('');
     const [stock, setProductStock] = useState(0);
-    const [images, setProductImages] = useState([]);
     const [imagesPreview, setImagesPreview] = useState([]);
     const dispatch = useDispatch()
     const {loading, error, success} = useSelector(state => state.newProduct);
@@ -47,8 +46,8 @@ function NewProduct({history}) {
         formData.set("seller", seller);
         formData.set("category", category);
         formData.set("currency", currency);
-        images.forEach(image => {
-            formData.set("images", image);
+        imagesPreview.forEach(image => {
+            formData.append("images", image);
         })
         dispatch(newProduct(formData));
     };
@@ -56,14 +55,11 @@ function NewProduct({history}) {
     const onChange = (e) => {
         const files = Array.from(e.target.files);
         setImagesPreview([]);
-        setProductImages([]);
-
         files.forEach(file => {
             const reader = new FileReader();
             reader.onload = () => {
                 if (reader.readyState === 2) {
                     setImagesPreview(oldArray => [...oldArray, reader.result]);
-                    setProductImages(oldArray => [...oldArray, reader.result]);
                 }
             };
             reader.readAsDataURL(file);
@@ -184,7 +180,7 @@ function NewProduct({history}) {
                                     ))}
                                 </div>
                                 <button
-                                    id="login_button"
+                                    id="login_btn"
                                     type="submit"
                                     className="btn btn-block py-3"
                                     disabled={loading}

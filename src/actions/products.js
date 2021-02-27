@@ -6,7 +6,7 @@ import {
     ALL_PRODUCTS_FAIL,
     ALL_PRODUCTS_REQUEST,
     ALL_PRODUCTS_SUCCESS,
-    CLEAR_ERRORS,
+    CLEAR_ERRORS, DELETE_PRODUCT_FAIL, DELETE_PRODUCT_REQUEST, DELETE_PRODUCT_SUCCESS,
     NEW_PRODUCT_FAIL,
     NEW_PRODUCT_REQUEST,
     NEW_PRODUCT_SUCCESS,
@@ -126,6 +126,25 @@ export const newProduct = (productData) => async (dispatch) => {
     }
 };
 
+//submit a product review
+export const deleteProduct = (id) => async (dispatch) => {
+    try {
+
+        dispatch({
+            type: DELETE_PRODUCT_REQUEST,
+        });
+        const data = await axios.delete(`/api/v1/admin/product/${id}`, config);
+        dispatch({
+            type: DELETE_PRODUCT_SUCCESS,
+            payload: data.data.success,
+        });
+    } catch (error) {
+        dispatch({
+            type: DELETE_PRODUCT_FAIL,
+            payload: error.response.data.message,
+        });
+    }
+};
 //clear errors
 export const clearErrors = () => async (dispatch) => {
     dispatch({

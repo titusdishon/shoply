@@ -1,9 +1,9 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-function SideBar(){
-    
-    return(
+function SideBar() {
+
+    return (
         <div className="sidebar-wrapper bg-dark">
             <nav id="sidebar">
                 <ul className="list-unstyled components">
@@ -11,8 +11,9 @@ function SideBar(){
                         <Link to={"/dashboard"}><i className="fa fa-tachometer"/> Dashboard</Link>
                     </li>
                     <li>
-                         <a href="#productSubmenu" data-toggle="collapse" aria-expanded="false"
-                           className="dropdown-toggle"><i className="fa fa-product-hunt" aria-hidden="true"/>Products</a>
+                        <a href="#productSubmenu" data-toggle="collapse" aria-expanded="false"
+                           className="dropdown-toggle"><i className="fa fa-product-hunt"
+                                                          aria-hidden="true"/>Products</a>
                         <ul className="collapse list-unstyled" id="productSubmenu">
                             <li>
                                 <Link to={"/dashboard/products"}><i className="fa fa-list"/> All</Link>
@@ -23,7 +24,7 @@ function SideBar(){
                         </ul>
                     </li>
                     <li>
-                        <Link to={"/admin/orders"}><i className="fa fa-shopping-basket"/> Orders</Link>
+                        <Link to={"/dashboard/orders"}><i className="fa fa-shopping-basket"/> Orders</Link>
                     </li>
 
                     <li>

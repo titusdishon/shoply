@@ -7,19 +7,34 @@ import Loader from "../layouts/Loader";
 import {Link} from "react-router-dom";
 import SideBar from "./sideBar";
 import {MDBDataTable} from "mdbreact";
-import {getAdminProducts} from "../../actions/products";
+import {deleteProduct, getAdminProducts} from "../../actions/products";
+import {DELETE_PRODUCT_RESET} from "../../constants/productConstants";
 
-function ProductList() {
+function ProductList({history}) {
     const alert = useAlert();
     const dispatch = useDispatch()
     const {loading, error, products} = useSelector(state => state.products);
+    const {error: deleteError, isDeleted, loading: isLoading} = useSelector(state => state.product);
     useEffect(() => {
         dispatch(getAdminProducts())
         if (error) {
             alert.error(error);
             dispatch(clearErrors());
         }
-    }, [dispatch, error, alert]);
+        if (deleteError) {
+            alert.error(deleteError);
+            dispatch({type: DELETE_PRODUCT_RESET});
+        }
+        if (isDeleted) {
+            alert.success("Product deleted successfully");
+            history.push('/dashboard/products')
+            dispatch({type: DELETE_PRODUCT_RESET});
+        }
+    }, [dispatch, error, alert, deleteError, isDeleted, history]);
+
+    const deleteAProduct = (e, pid) => {
+        dispatch(deleteProduct(pid))
+    }
 
     const setProducts = () => {
         const data = {
@@ -61,7 +76,8 @@ function ProductList() {
                     <Fragment>
                         <Link className={'btn btn-primary'} to={`/admin/product/${product._id}`}><i
                             className={'fa fa-eye'}/></Link>
-                        <button className="btn btn-danger py-1 px-2 ml-2">
+                        <button className="btn btn-danger py-1 px-2 ml-2"
+                                onClick={(e) => deleteAProduct(e, product._id)}>
                             <i className={'fa fa-trash'}/>
                         </button>
                     </Fragment>
@@ -69,8 +85,11 @@ function ProductList() {
         })
         return data;
     }
+
+
     return (
         <Fragment>
+            {(isLoading || loading) && <Loader/>}
             <MetaData title={"Admin-products"}/>
             <div className="row">
                 <div className="col-12 col-md-2">

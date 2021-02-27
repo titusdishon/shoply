@@ -57,7 +57,7 @@ function ListOrders() {
                 status: order.orderStatus && String(order.orderStatus).includes('Delivered') ?
                     <p className={"text-success"}> {order.orderStatus}</p> :
                     <p className={"text-danger"}> {order.orderStatus}</p>,
-                actions: <Link className={'btn btn-success'} to={`/order/${order._id}`}><i className={'fa fa-eye'}/>
+                actions: <Link className={'btn btn-success'} to={`/order/details/${order._id}`}><i className={'fa fa-eye'}/>
                 </Link>
             })
         })

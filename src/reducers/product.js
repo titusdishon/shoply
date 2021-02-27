@@ -6,6 +6,10 @@ import {
     ALL_PRODUCTS_REQUEST,
     ALL_PRODUCTS_SUCCESS,
     CLEAR_ERRORS,
+    DELETE_PRODUCT_FAIL,
+    DELETE_PRODUCT_REQUEST,
+    DELETE_PRODUCT_RESET,
+    DELETE_PRODUCT_SUCCESS,
     NEW_PRODUCT_FAIL,
     NEW_PRODUCT_REQUEST,
     NEW_PRODUCT_RESET,
@@ -143,7 +147,6 @@ export const newReviewReducer = (state = {product: {}}, action) => {
 
 
 //new product
-
 export const newProductReducer = (state = {product: {}}, action) => {
     switch (action.type) {
         case NEW_PRODUCT_REQUEST:
@@ -170,6 +173,42 @@ export const newProductReducer = (state = {product: {}}, action) => {
                 ...state,
                 loading: false,
                 success: false,
+            };
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null,
+            };
+        default:
+            return state;
+    }
+};
+
+//new product
+export const productReducer = (state = {}, action) => {
+    switch (action.type) {
+        case DELETE_PRODUCT_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            };
+        case DELETE_PRODUCT_SUCCESS:
+            return {
+                ...state,
+                isDeleted: action.payload,
+                loading: false,
+            };
+        case DELETE_PRODUCT_FAIL:
+            return {
+                ...state,
+                loading: false,
+                err: action.payload,
+            };
+        case DELETE_PRODUCT_RESET:
+            return {
+                ...state,
+                loading: false,
+                isDeleted: false,
             };
         case CLEAR_ERRORS:
             return {

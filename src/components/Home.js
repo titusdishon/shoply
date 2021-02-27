@@ -19,7 +19,7 @@ function Home({ match }) {
   const [rating, setRating] = useState("0");
 
 
-  const [price, setPrice] = useState([1, 10000]);
+  const [price, setPrice] = useState([1, 100000]);
 
   const keyword = match.params.keyword;
   const alert = useAlert();
@@ -64,10 +64,10 @@ function Home({ match }) {
                   <div className="col-6 col-md-3 mt-5 mb-5">
                     <div className="px-5">
                       <Range
-                        marks={{ 1: `$1`, 10000: `$10000` }}
+                        marks={{ 1: `$1`, 100000: `100000` }}
                         min={1}
-                        max={10000}
-                        def={[1, 10000]}
+                        max={100000}
+                        def={[1, 100000]}
                         tipFormatter={(value) => `${value}`}
                         tipProps={{
                           placement: "top",

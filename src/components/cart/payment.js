@@ -6,6 +6,7 @@ import {CardCvcElement, CardExpiryElement, CardNumberElement, useElements, useSt
 import CheckoutSteps from "./checkoutSteps";
 import axios from "axios";
 import {clearErrors, createOrder} from "../../actions/order";
+import {RESET_CART_CART} from "../../constants/cart";
 
 const options = {
     style: {
@@ -84,6 +85,7 @@ function Payment({history}) {
                         status: result.paymentIntent.status
                     }
                     dispatch(createOrder(order));
+                    dispatch({type:RESET_CART_CART})
                     history.push('/success');
                 } else {
                     alert.error('There was an issue processing your payment')

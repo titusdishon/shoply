@@ -28,6 +28,8 @@ import Dashboard from "./components/admin/dashboard";
 import ProductList from "./components/admin/productList";
 import NewProduct from "./components/admin/newProduct";
 import {useSelector} from "react-redux";
+import AdminOrders from "./components/admin/ordersList";
+import ConfirmOrder from "./components/cart/confirmOrder";
 
 function App() {
     const [stripe_api, setStripe] = useState();
@@ -59,7 +61,7 @@ function App() {
                     <ProtectedRoute path="/new/password" component={ChangePassword}/>
                     <ProtectedRoute path="/shipping" component={Shipping}/>
                     <ProtectedRoute path="/success" component={OrderSuccess}/>
-                    <ProtectedRoute path="/success" component={OrderSuccess}/>
+                    <ProtectedRoute path="/order/confirm" component={ConfirmOrder}/>
                     <ProtectedRoute path="/orders/me" component={ListOrders}/>
 
                     {
@@ -69,14 +71,14 @@ function App() {
                     }
                     <Route path="/cart" component={Cart}/>
                     <Route path="/product/:id" component={ProductDetails} exact/>
-                    <Route path="/order/:id" component={OrderDetails} exact/>
-
+                    <Route path="/order/details/:id" component={OrderDetails} exact/>
                     {/*admin routes*/}
                 </div>
                 <ProtectedRoute path="/dashboard" isAdmin={true} component={Dashboard} exact/>
                 <ProtectedRoute path="/admin/product/new" isAdmin={true} component={NewProduct} exact/>
                 <ProtectedRoute path="/dashboard/products" isAdmin={true} component={ProductList} exact/>
-                {!loading && user.role !== 'admin' && (<Footer/>)}
+                <ProtectedRoute path="/dashboard/orders" isAdmin={true} component={AdminOrders} exact/>
+                {!loading && user&&user.role !== 'admin' && (<Footer/>)}
             </div>
         </Router>
     );

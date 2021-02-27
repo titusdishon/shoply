@@ -12,6 +12,7 @@
     "bootstrap": "^4.6.0",
     "countries-list": "^2.6.1",
     "mdbreact": "^5.0.1",
+    "moment": "^2.29.1",
     "rc-slider": "^9.7.1",
     "react": "^17.0.1",
     "react-alert": "^7.0.2",

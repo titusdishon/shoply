@@ -43,7 +43,7 @@ function Cart({history}) {
                                                 <img src={item.image} alt="Laptop" height="90" width="115"/>
                                             </div>
                                             <div className="col-5 col-lg-2">
-                                                <Link to={`/products/${item.product}`}>{item.name}</Link>
+                                                <Link to={`/product/${item.product}`}>{item.name}</Link>
                                             </div>
                                             <div className="col-4 col-lg-2 mt-4 mt-lg-0">
                                                 <p id="card_item_price">{item.price}</p>

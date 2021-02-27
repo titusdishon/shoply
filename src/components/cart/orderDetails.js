@@ -10,7 +10,6 @@ function OrderDetails({match}) {
     const alert = useAlert();
     const dispatch = useDispatch()
     const {loading, error, order} = useSelector(state => state.order);
-    const {shippingInfo, orderItems, paymentInfo, user, totalPrice} = order;
     useEffect(() => {
         dispatch(getOrderDetails(match.params.id))
         if (error) {
@@ -18,8 +17,8 @@ function OrderDetails({match}) {
             dispatch(clearErrors());
         }
     }, [dispatch, error, alert,match.params.id]);
-    const shippingAddressDetails = shippingInfo && `${shippingInfo.address},${shippingInfo.city},${shippingInfo.postalCode},${shippingInfo.country}`
-    const isPaid = paymentInfo && paymentInfo.status === 'succeeded'
+    const shippingAddressDetails =order&& order.shippingInfo && `${order.shippingInfo.address},${order.shippingInfo.city},${order.shippingInfo.postalCode},${order.shippingInfo.country}`
+    const isPaid = order&&order.paymentInfo && order.paymentInfo.status === 'succeeded'
     return (
         <Fragment>
             <MetaData title={"Order details"}/>
@@ -30,10 +29,10 @@ function OrderDetails({match}) {
                             <div className="col-12 col-lg-8 m-auto order-details">
                                 <h1 className="my-5">Order # {order && order._id}</h1>
                                 <h4 className="mb-4">Shipping Info</h4>
-                                <p><b>Name:</b> {user && user.name}</p>
-                                <p><b>Phone:</b>{shippingInfo && shippingInfo.phoneNumber} </p>
+                                <p><b>Name:</b> {order && order.user.name}</p>
+                                <p><b>Phone:</b>{order && order.shippingInfo.phoneNumber} </p>
                                 <p className="mb-4"><b>Address:</b>{shippingAddressDetails}</p>
-                                <p><b>Amount:</b> {totalPrice && totalPrice}</p>
+                                <p><b>Amount:</b> {order && order.totalPrice}</p>
 
                                 <hr/>
 
@@ -42,26 +41,22 @@ function OrderDetails({match}) {
                                 <p className={isPaid ? 'greenColor' : 'redColor'}><b>{isPaid ? 'PAID' : 'NOT PAID'}</b>
                                 </p>
                                 <h4 className="my-4">Status</h4>
-                                <p className={order.orderStatus && String(order.orderStatus).includes('Delivered') ? 'greenColor' : 'redColor'}>
-                                    <b>{order.orderStatus && order.orderStatus}</b></p>
+                                <p className={order&&order.orderStatus && String(order.orderStatus).includes('Delivered') ? 'greenColor' : 'redColor'}>
+                                    <b>{order&&order.orderStatus && order.orderStatus}</b></p>
                                 <h4 className="my-4">Order Items:</h4>
                                 <hr/>
                                 <div className="cart-item my-1">
-                                    {orderItems && orderItems.map(item => (
+                                    {order && order.orderItems.map(item => (
                                         <div className="row my-5" key={item.product}>
                                             <div className="col-4 col-lg-2">
                                                 <img src={item.image} alt={item.name} height="45" width="65"/>
                                             </div>
-
                                             <div className="col-5 col-lg-5">
                                                 <Link to={`/product/${item.product}`}>{item.name}</Link>
                                             </div>
-
-
                                             <div className="col-4 col-lg-2 mt-4 mt-lg-0">
                                                 <p>{item.price}</p>
                                             </div>
-
                                             <div className="col-4 col-lg-3 mt-4 mt-lg-0">
                                                 <p>{item.quantity}</p>
                                             </div>
