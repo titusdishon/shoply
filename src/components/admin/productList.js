@@ -74,8 +74,8 @@ function ProductList({history}) {
                 price: product.price,
                 actions:
                     <Fragment>
-                        <Link className={'btn btn-primary'} to={`/admin/product/${product._id}`}><i
-                            className={'fa fa-eye'}/></Link>
+                        <Link className={'btn btn-primary'} to={`/dashboard/product/update/${product._id}`}><i
+                            className={'fa fa-edit'}/></Link>
                         <button className="btn btn-danger py-1 px-2 ml-2"
                                 onClick={(e) => deleteAProduct(e, product._id)}>
                             <i className={'fa fa-trash'}/>

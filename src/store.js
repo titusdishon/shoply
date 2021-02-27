@@ -6,26 +6,31 @@ import {
     newProductReducer,
     newReviewReducer,
     productDetailsReducer,
-    productsReducer
+    productsReducer, getProductReviewReducer, deleteReviewReducer
 } from "./reducers/product";
-import {authReducer, forgotPasswordReducer, userReducer} from "./reducers/user";
+import {authReducer, forgotPasswordReducer, userReducer, usersDetailsReducer, usersReducer} from "./reducers/user";
 import {cartReducer} from "./reducers/cart";
-import {adminOrdersReducers, myOrders, newOrderReducer, orderDetailsReducer} from "./reducers/order";
+import {adminOrdersReducers, myOrders, newOrderReducer, orderDetailsReducer, orderReducer} from "./reducers/order";
 
 const reducer = combineReducers({
     products: productsReducer,
     productDetails: productDetailsReducer,
     auth: authReducer,
     user: userReducer,
+    users: usersReducer,
     forgotPassword: forgotPasswordReducer,
     cart: cartReducer,
+    productReviews: getProductReviewReducer,
+    review: deleteReviewReducer,
     newOrder: newOrderReducer,
     myOrders: myOrders,
     order: orderDetailsReducer,
     newReview: newReviewReducer,
     newProduct: newProductReducer,
     adminOrders: adminOrdersReducers,
-    product: productReducer
+    product: productReducer,
+    orderUpdate:orderReducer,
+    userDetails:usersDetailsReducer,
 });
 
 let initialState = {

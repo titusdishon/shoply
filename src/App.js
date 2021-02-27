@@ -30,10 +30,15 @@ import NewProduct from "./components/admin/newProduct";
 import {useSelector} from "react-redux";
 import AdminOrders from "./components/admin/ordersList";
 import ConfirmOrder from "./components/cart/confirmOrder";
+import UpdateProduct from "./components/admin/updateProduct";
+import ProcessOrder from "./components/admin/processOrder";
+import UsersList from "./components/admin/usersList";
+import UpdateUser from "./components/admin/updateUser";
+import ProductReviews from "./components/admin/productReviews";
 
 function App() {
     const [stripe_api, setStripe] = useState();
-    const {user, loading}=useSelector(state=>state.auth);
+    const {user, loading} = useSelector(state => state.auth);
     useEffect(() => {
         async function getStripeApiKey() {
             const {data} = await axios.get('/api/v1/stripe-api');
@@ -75,10 +80,15 @@ function App() {
                     {/*admin routes*/}
                 </div>
                 <ProtectedRoute path="/dashboard" isAdmin={true} component={Dashboard} exact/>
-                <ProtectedRoute path="/admin/product/new" isAdmin={true} component={NewProduct} exact/>
+                <ProtectedRoute path="/dashboard/product/new" isAdmin={true} component={NewProduct} exact/>
                 <ProtectedRoute path="/dashboard/products" isAdmin={true} component={ProductList} exact/>
+                <ProtectedRoute path="/dashboard/users" isAdmin={true} component={UsersList} exact/>
                 <ProtectedRoute path="/dashboard/orders" isAdmin={true} component={AdminOrders} exact/>
-                {!loading && user&&user.role !== 'admin' && (<Footer/>)}
+                <ProtectedRoute path="/dashboard/product/update/:id" isAdmin={true} component={UpdateProduct} exact/>
+                <ProtectedRoute path="/dashboard/user/update/:id" isAdmin={true} component={UpdateUser} exact/>
+                <ProtectedRoute path="/dashboard/order/:id" isAdmin={true} component={ProcessOrder} exact/>
+                <ProtectedRoute path="/dashboard/reviews" isAdmin={true} component={ProductReviews} exact/>
+                {!loading && user && user.role !== 'admin' && (<Footer/>)}
             </div>
         </Router>
     );

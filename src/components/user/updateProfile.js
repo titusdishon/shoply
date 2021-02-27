@@ -9,7 +9,7 @@ import MetaData from "../layouts/MetaData";
 
 function UpdateUserProfile({history}) {
     const dispatch = useDispatch();
-    const [userData, setUser] = useState({name: "", email: "",})
+    const [userData, setUser] = useState({name: "", email: "",phoneNumber:""})
     const [avatar, setAvatar] = useState('');
     const {user} = useSelector((state) => state.auth);
     const { loading,isUpdated, error} = useSelector((state) => state.user);
@@ -84,6 +84,17 @@ function UpdateUserProfile({history}) {
                                             name='email'
                                             onChange={onChange}
                                             value={userData.email}
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="phone_field">Phone Number</label>
+                                        <input
+                                            type="text"
+                                            id="phone_field"
+                                            className="form-control"
+                                            name='phoneNumber'
+                                            onChange={onChange}
+                                            value={userData.phoneNumber}
                                         />
                                     </div>
                                     <div className='form-group'>

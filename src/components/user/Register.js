@@ -13,6 +13,7 @@ function Register({ history }) {
   const [user, setUser] = useState({
     name: "",
     email: "",
+    phoneNumber: "",
     password: "",
   });
 
@@ -95,6 +96,17 @@ function Register({ history }) {
                   />
                 </div>
                 <div className="form-group">
+                  <label htmlFor="phone_field">Phone Number</label>
+                  <input
+                    type="email"
+                    id="phone_field"
+                    name="phoneNumber"
+                    className="form-control"
+                    value={user.phoneNumber}
+                    onChange={onChange}
+                  />
+                </div>
+                <div className="form-group">
                   <label htmlFor="password_field">Password</label>
                   <input
                     type="password"
@@ -141,7 +153,7 @@ function Register({ history }) {
                   REGISTER
                 </button>
                 <Link to="/login" className="float-right mt-3">
-                  ALread y have an account?
+                  ALready have an account?
                 </Link>
               </form>
             </div>

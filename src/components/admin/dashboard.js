@@ -4,16 +4,22 @@ import {Link, Redirect} from "react-router-dom";
 import MetaData from "../layouts/MetaData";
 import {useDispatch, useSelector} from "react-redux";
 import {getAdminProducts} from "../../actions/products";
-import {clearErrors} from "../../actions/order";
+import {clearErrors, getAdminOrders} from "../../actions/order";
 import {useAlert} from "react-alert";
+import {getAllUsers} from "../../actions/user";
 
 function Dashboard() {
     const dispatch = useDispatch()
     const alert=useAlert();
     const {user}=useSelector(state=>state.auth);
     const {error, products} = useSelector(state => state.products);
+    const {loading, orders} = useSelector(state => state.adminOrders);
+    const { users} = useSelector(state => state.users);
+
     useEffect(() => {
         dispatch(getAdminProducts())
+        dispatch(getAllUsers())
+        dispatch(getAdminOrders())
         if (error) {
             alert.error(error);
             dispatch(clearErrors());
@@ -52,7 +58,7 @@ function Dashboard() {
                                 <div className="card-body">
                                     <div className="text-center card-font-size">Products<br/> <b>{products&&products.length}</b></div>
                                 </div>
-                                <Link className="card-footer text-white clearfix small z-1" to="/admin/products">
+                                <Link className="card-footer text-white clearfix small z-1" to="/dashboard/products">
                                     <span className="float-left">View Details</span>
                                     <span className="float-right">
                                                 <i className="fa fa-angle-right"/>
@@ -65,7 +71,7 @@ function Dashboard() {
                         <div className="col-xl-3 col-sm-6 mb-3">
                             <div className="card text-white bg-danger o-hidden h-100">
                                 <div className="card-body">
-                                    <div className="text-center card-font-size">Orders<br/> <b>125</b></div>
+                                    <div className="text-center card-font-size">Orders<br/> <b>{orders&&orders.length}</b></div>
                                 </div>
                                 <Link className="card-footer text-white clearfix small z-1" to="/admin/orders">
                                     <span className="float-left">View Details</span>
@@ -80,7 +86,7 @@ function Dashboard() {
                         <div className="col-xl-3 col-sm-6 mb-3">
                             <div className="card text-white bg-info o-hidden h-100">
                                 <div className="card-body">
-                                    <div className="text-center card-font-size">Users<br/> <b>45</b></div>
+                                    <div className="text-center card-font-size">Users<br/> <b>{users&&users.length}</b></div>
                                 </div>
                                 <Link className="card-footer text-white clearfix small z-1" to="/admin/users">
                                     <span className="float-left">View Details</span>
