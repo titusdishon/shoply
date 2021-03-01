@@ -13,7 +13,7 @@ function Dashboard() {
     const alert=useAlert();
     const {user}=useSelector(state=>state.auth);
     const {error, products} = useSelector(state => state.products);
-    const {loading, orders} = useSelector(state => state.adminOrders);
+    const { orders} = useSelector(state => state.adminOrders);
     const { users} = useSelector(state => state.users);
 
     useEffect(() => {
