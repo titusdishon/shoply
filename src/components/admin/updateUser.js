@@ -41,7 +41,7 @@ function UpdateUser({history, match}) {
             alert.error(error);
             dispatch(clearErrors());
         }
-    }, [userId, isUpdated, user, error])
+    }, [userId, isUpdated, user, error, alert, dispatch, history])
 
 
     const submitHandler = (e) => {

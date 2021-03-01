@@ -7,6 +7,7 @@ import CheckoutSteps from "./checkoutSteps";
 import axios from "axios";
 import {clearErrors, createOrder} from "../../actions/order";
 import {RESET_CART_CART} from "../../constants/cart";
+import {config} from "../../constants/general";
 
 const options = {
     style: {
@@ -55,12 +56,6 @@ function Payment({history}) {
         document.querySelector('#pay_btn').disabled = true;
         let res;
         try {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }
-
             res = await axios.post('/api/v1/payment/process', paymentData, config);
             const clientSecret = res.data.client_secret;
             if (!stripe || !elements) {

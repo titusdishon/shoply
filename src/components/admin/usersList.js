@@ -28,7 +28,7 @@ function UsersList({history}) {
             alert.error(error);
             dispatch(clearErrors());
         }
-    }, [dispatch, error, alert, isDeleted]);
+    }, [dispatch, error, alert, isDeleted, history]);
 
     const setUsers = () => {
         const data = {

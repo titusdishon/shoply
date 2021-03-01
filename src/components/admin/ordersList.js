@@ -26,7 +26,7 @@ function AdminOrders({history}) {
             alert.error(error);
             dispatch(clearErrors());
         }
-    }, [dispatch, error, isDeleted, alert]);
+    }, [dispatch, error, isDeleted, alert, history]);
 
     const setOrders = () => {
         const data = {
