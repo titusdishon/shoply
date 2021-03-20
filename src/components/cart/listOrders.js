@@ -64,9 +64,10 @@ function ListOrders() {
         return data;
     }
     return (
-        <Fragment>
+        <Fragment >
+           <div className="container">
             <MetaData title={"My Orders"}/>
-            <h1 className={"mt-5"}>My Orders</h1>
+            <h3 className={"mt-5 ml-2"}>My Orders</h3>
             {loading ? <Loader/> : (
                 <MDBDataTable
                     data={setOrders()}
@@ -76,6 +77,7 @@ function ListOrders() {
                     hover
                 />
             )}
+            </div>
         </Fragment>
     )
 }

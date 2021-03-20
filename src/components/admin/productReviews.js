@@ -97,9 +97,9 @@ function ProductReviews({history}) {
                     </div>
                     <div className="col-12 col-md-10">
                         <Fragment>
-                            <h1 className="my-5">Product Reviews</h1>
-                            <div className="row justify-content-center mt-5">
+                            <div className="row justify-content-center mt-2">
                                 <div className="col-5">
+                                <h3 className="my-3 pl-0">Product Reviews</h3>
                                     <form onSubmit={submitHandler}>
                                         <div className="form-group">
                                             <label htmlFor="productId_field">Enter Product ID</label>

@@ -24,10 +24,11 @@ function ConfirmOrder({history}) {
     }
     return (
         <Fragment>
+           <div className="container">
             <MetaData title={"Confirm Order"}/>
             <CheckoutSteps shipping confirmOrder/>
             <div className="row d-flex justify-content-between">
-                <div className="col-12 col-lg-8 mt-5 order-confirm">
+                <div className="col-12 col-lg-8 mt-5 bg-light order-confirm">
                     <h4 className="mb-3">Shipping Info</h4>
                     <p><b>Name:</b> {user && user.name}</p>
                     <p><b>Phone:</b> {shippingInfo && shippingInfo.phoneNumber}</p>
@@ -56,7 +57,7 @@ function ConfirmOrder({history}) {
                     ))}
                     <hr/>
                 </div>
-                <div className="col-12 col-lg-3 my-4">
+                <div className="col-12 col-lg-3 my-4 mt-lg-5 p-2 bg-light">
                     <div id="order_summary">
                         <h4>Order Summary</h4>
                         <hr/>
@@ -71,6 +72,7 @@ function ConfirmOrder({history}) {
                         </button>
                     </div>
                 </div>
+            </div>
             </div>
         </Fragment>
     )

@@ -26,14 +26,15 @@ function OrderDetails({match}) {
                 <Fragment>
                     <div className="container container-fluid">
                         <div className="row d-flex justify-content-between">
-                            <div className="col-12 col-lg-8 m-auto order-details">
-                                <h1 className="my-5">Order # {order && order._id}</h1>
+                            <div className="col-12 col-lg-8 m-auto bg-light order-details">
+                                <h1 className="my-5 ">Order # {order && order._id}</h1>
+                                <hr className="p-0 m-0 bg-dark"/>
                                 <h4 className="mb-4">Shipping Info</h4>
                                 <p><b>Name:</b> {order && order.user.name}</p>
                                 <p><b>Phone:</b>{order && order.shippingInfo.phoneNumber} </p>
                                 <p className="mb-4"><b>Address:</b>{shippingAddressDetails}</p>
                                 <p><b>Amount:</b> {order && order.totalPrice}</p>
-                                <hr/>
+                                <hr className="p-0 m-0 bg-dark"/>
                                 <h4 className="my-4">Payment</h4>
                                 <h4 className="my-4">Order Status:</h4>
                                 <p className={isPaid ? 'greenColor' : 'redColor'}><b>{isPaid ? 'PAID' : 'NOT PAID'}</b>
@@ -42,7 +43,7 @@ function OrderDetails({match}) {
                                 <p className={order&&order.orderStatus && String(order.orderStatus).includes('Delivered') ? 'greenColor' : 'redColor'}>
                                     <b>{order&&order.orderStatus && order.orderStatus}</b></p>
                                 <h4 className="my-4">Order Items:</h4>
-                                <hr/>
+                                <hr className="p-0 m-0 bg-dark"/>
                                 <div className="cart-item my-1">
                                     {order && order.orderItems.map(item => (
                                         <div className="row my-5" key={item.product}>
@@ -61,10 +62,9 @@ function OrderDetails({match}) {
                                         </div>
                                     ))}
                                 </div>
-                                <hr/>
+                                <hr className="p-0 m-0 bg-dark"/>
                             </div>
                         </div>
-
                     </div>
                 </Fragment>
             )}

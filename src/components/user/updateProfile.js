@@ -37,6 +37,7 @@ function UpdateUserProfile({history}) {
         const formData = new FormData();
         formData.set("name", userData.name);
         formData.set("email", userData.email);
+        formData.set("phoneNumber", userData.phoneNumber);
         formData.set("avatar", avatar);
         dispatch(updateProfile(formData));
     }

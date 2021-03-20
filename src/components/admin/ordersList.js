@@ -122,7 +122,7 @@ function AdminOrders({history}) {
                     </div>
                     <div className="col-12 col-md-10">
                         <Fragment>
-                            <h1 className="my-5">All Orders</h1>
+                            <h3 className="my-2 pl-3">All Orders</h3>
                             {loading ? <Loader/> : (
                                 <Fragment>
                                     <MDBDataTable

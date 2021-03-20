@@ -11,7 +11,7 @@ function Profile() {
         <Fragment>
             <MetaData title={user && user.name}/>
             {loading ? <Loader/> : <Fragment>
-                <h2 className="mt-5 ml-5">My Profile</h2>
+                <h3 className="mt-5 ml-5">My Profile</h3>
                 <div className="row justify-content-around mt-5 user-info">
                     <div className="col-12 col-md-3">
                         <figure className='avatar avatar-profile'>
