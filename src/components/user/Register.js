@@ -15,6 +15,7 @@ function Register({ history }) {
     email: "",
     phoneNumber: "",
     password: "",
+    role: "",
   });
 
   const alert = useAlert();
@@ -40,6 +41,8 @@ function Register({ history }) {
     formData.set("name", user.name);
     formData.set("password", user.password);
     formData.set("email", user.email);
+    formData.set("role", user.role);
+    formData.set("phoneNumber", user.phoneNumber);
     formData.set("avatar", avatarPriview);
 
     dispatch(register(formData));
@@ -62,17 +65,18 @@ function Register({ history }) {
   return (
     <Fragment>
       {loading ? (
-        <Loader />) : (
+        <Loader />
+      ) : (
         <Fragment>
           <MetaData title={"register"} />
           <div className="row wrapper">
-            <div className="col-10 col-lg-5">
+            <div className="col-12 col-lg-5 col-sm-12">
               <form
                 className="shadow-lg"
                 encType="multipart/form-data"
                 onSubmit={submitHandler}
               >
-                <h1 className="mb-3">Register</h1>
+                <h4 className="mb-3">Register</h4>
                 <div className="form-group">
                   <label htmlFor="email_field">Name</label>
                   <input
@@ -98,7 +102,7 @@ function Register({ history }) {
                 <div className="form-group">
                   <label htmlFor="phone_field">Phone Number</label>
                   <input
-                    type="email"
+                    type="text"
                     id="phone_field"
                     name="phoneNumber"
                     className="form-control"
@@ -117,6 +121,17 @@ function Register({ history }) {
                     onChange={onChange}
                   />
                 </div>
+                <select
+                  id="role_field"
+                  className="form-control"
+                  value={user.role}
+                  name="role"
+                  onChange={onChange}
+                  required
+                >
+                  <option value={"user"}>User</option>
+                  <option value={"admin"}>Marchant</option>
+                </select>
                 <div className="form-group">
                   <label htmlFor="avatar_upload">Avatar</label>
                   <div className="d-flex align-items-center">
@@ -152,9 +167,11 @@ function Register({ history }) {
                 >
                   REGISTER
                 </button>
-                <Link to="/login" className="float-right mt-3">
-                  ALready have an account?
+                <Link to="/login" className="float-right ">
+                  Already have an account?
                 </Link>
+                <br/>
+                <br/>
               </form>
             </div>
           </div>

@@ -33,9 +33,7 @@ function OrderDetails({match}) {
                                 <p><b>Phone:</b>{order && order.shippingInfo.phoneNumber} </p>
                                 <p className="mb-4"><b>Address:</b>{shippingAddressDetails}</p>
                                 <p><b>Amount:</b> {order && order.totalPrice}</p>
-
                                 <hr/>
-
                                 <h4 className="my-4">Payment</h4>
                                 <h4 className="my-4">Order Status:</h4>
                                 <p className={isPaid ? 'greenColor' : 'redColor'}><b>{isPaid ? 'PAID' : 'NOT PAID'}</b>

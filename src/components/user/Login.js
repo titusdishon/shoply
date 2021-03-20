@@ -41,9 +41,9 @@ function Login({ history, location }) {
         <Fragment>
           <MetaData title={"login"} />
           <div className="row wrapper">
-            <div className="col-10 col-lg-5">
+            <div className="col-sm-12 col-lg-5 col-md-6 ">
               <form className="shadow-lg" onSubmit={submitHandler}>
-                <h1 className="mb-3">Login</h1>
+                <h4 className="mb-3">Login</h4>
                 <div className="form-group">
                   <label htmlFor="email_field">Email</label>
                   <input
@@ -77,6 +77,8 @@ function Login({ history, location }) {
                 <Link to="/register" className="float-right mt-3">
                   New User?
                 </Link>
+                <br/>
+                <br/>
               </form>
             </div>
           </div>

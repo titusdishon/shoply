@@ -12,7 +12,7 @@ function Search({history}) {
     }
 
   return (
-    <form onSubmit={searchHandler} className={"m-auto col-lg-12"}>
+    <form onSubmit={searchHandler} >
       <div className="input-group">
         <input
           type="text"

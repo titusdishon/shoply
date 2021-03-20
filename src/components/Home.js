@@ -61,7 +61,7 @@ function Home({ match }) {
             <div className="row">
               {keyword ? (
                 <Fragment>
-                  <div className="col-6 col-md-3 mt-5 mb-5">
+                  <div className="col-6 col-md-3 mt-5 col-sm-12 mb-5">
                     <div className="px-5">
                       <Range
                         marks={{ 1: `$1`, 100000: `100000` }}

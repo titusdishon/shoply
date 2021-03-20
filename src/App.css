@@ -301,9 +301,11 @@ footer {
   margin-top: 5rem;
   font-weight: 700;
 }
-
+.logo{
+  width:50px !important;
+}
 .wrapper form {
-  padding: 2.5rem 3rem;
+  padding: 1rem 1rem;
 }
 
 .wrapper form .btn {
@@ -610,4 +612,10 @@ ul.CTAs a {
 .review_user {
   font-size: 0.8rem;
   color: grey;
+}
+/*responsive design*/
+@media screen and (max-width: 800px) {
+  .left, .main, .right {
+    width: 100%; /* The width is 100%, when the viewport is 800px or smaller */
+  }
 }

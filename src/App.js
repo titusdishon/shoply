@@ -44,10 +44,12 @@ function App() {
             const {data} = await axios.get('/api/v1/stripe-api');
             setStripe(data.stripeApiKey);
         }
-
-        getStripeApiKey().then();
-        store.dispatch(loadUser()).then(r => {
-        });
+        console.log("Hello",window.location.pathname)
+        if (window.location.pathname!=="/login"&&window.location.pathname!=="/register"){
+            getStripeApiKey().then();
+            store.dispatch(loadUser()).then(r => {
+            });
+        }
     }, []);
 
     return (
@@ -68,7 +70,6 @@ function App() {
                     <ProtectedRoute path="/success" component={OrderSuccess}/>
                     <ProtectedRoute path="/order/confirm" component={ConfirmOrder}/>
                     <ProtectedRoute path="/orders/me" component={ListOrders}/>
-
                     {
                         stripe_api && <Elements stripe={loadStripe(stripe_api)}>
                             <ProtectedRoute path="/payment" component={Payment}/>
@@ -88,7 +89,16 @@ function App() {
                 <ProtectedRoute path="/dashboard/user/update/:id" isAdmin={true} component={UpdateUser} exact/>
                 <ProtectedRoute path="/dashboard/order/:id" isAdmin={true} component={ProcessOrder} exact/>
                 <ProtectedRoute path="/dashboard/reviews" isAdmin={true} component={ProductReviews} exact/>
-                {!loading && user && user.role !== 'admin' && (<Footer/>)}
+               <br/>
+               <br/>
+               <br/>
+               <br/>
+               <br/>
+               <br/>
+               <br/>
+                <div>
+                    {!loading && user && user.role !== 'admin' && (<Footer/>)}
+                </div>
             </div>
         </Router>
     );

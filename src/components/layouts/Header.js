@@ -21,7 +21,7 @@ function Header() {
                 <div className="col-12 col-md-3">
                     <div className="navbar-brand">
                         <Link to={"/"}>
-                            <img src={logo} alt={"avatar"}/>
+                            <img className={"logo"} src={logo} alt={"avatar"}/>
                         </Link>
                     </div>
                 </div>

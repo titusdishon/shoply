@@ -33,6 +33,7 @@ import {
     USER_DETAILS_SUCCESS,
 } from "../constants/authConstants";
 import axios from "axios";
+import{AUTH_TOKEN} from "../config/constants";
 
 //login user
 const config = {headers: {"Content-Type": "application/json"}};
@@ -41,6 +42,7 @@ export const login = (email, password) => async (dispatch) => {
     try {
         dispatch({type: LOGIN_REQUEST,});
         const {data} = await axios.post(`/api/v1/login`, {email, password}, config);
+        localStorage.setItem(AUTH_TOKEN,data.token);
         dispatch({type: LOGIN_SUCCESS, payload: data.user,});
     } catch (error) {
         dispatch({type: LOGIN_FAIL, payload: error.response.data.message,});
@@ -53,6 +55,7 @@ export const register = (userData) => async (dispatch) => {
     try {
         dispatch({type: REGISTRATION_REQUEST,});
         const {data} = await axios.post(`/api/v1/register`, userData, config);
+        localStorage.setItem(AUTH_TOKEN,data.token);
         dispatch({type: REGISTRATION_SUCCESS, payload: data.user,});
     } catch (error) {
         dispatch({type: REGISTRATION_FAIL, payload: error.response.data.message,});

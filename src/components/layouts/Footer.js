@@ -6,7 +6,7 @@ function Footer() {
     <Fragment>
       <footer className="py-1  bg-dark mb-0 footer">
         <p className="text-center mt-1">
-          Shopping Cart - {date.getFullYear()}, All Rights Reserved
+          MegaStore - {date.getFullYear()}, All Rights Reserved
         </p>
       </footer>
     </Fragment>
