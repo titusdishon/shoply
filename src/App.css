@@ -7,6 +7,10 @@ body {
   padding: 0px;
   overflow-x: hidden;
 }
+
+.home{
+  min-height: 80vh;
+}
 .bg-dark {
   background-color: #232f3e!important;
 }
@@ -38,7 +42,6 @@ nav {
 }
 
 .input-group {
-  width: 90%;
   margin-right: 35%;
 }
 

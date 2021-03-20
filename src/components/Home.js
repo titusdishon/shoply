@@ -56,8 +56,8 @@ function Home({ match }) {
       ) : (
         <Fragment>
           <MetaData title="Buy the best products here" />
-          <h1 id="products_heading">Latest Products</h1>
-          <section id="products" className="container mt-5">
+          <section id="products" className="container mt-5 home">
+          <div>{products&&products.length>0?<h1 id="products_heading">Latest Products</h1>:<h3 className="alert alert-warning m-auto p-auto">No products found</h3>}</div>
             <div className="row">
               {keyword ? (
                 <Fragment>
